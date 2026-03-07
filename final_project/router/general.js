@@ -36,48 +36,71 @@ public_users.get('/', async function (req, res) {
 });
 
 // Get book details based on ISBN
-public_users.get('/isbn/:isbn', function (req, res) {
-    const isbn = req.params.isbn;
+public_users.get('/isbn/:isbn', async function (req, res) {
 
-    axios.get(`http://localhost:5000/isbn/${isbn}`)
-        .then((response) => {
-            res.status(200).send(JSON.stringify(response.data, null, 4));
-        })
-        .catch((error) => {
-            const status = error.response ? error.response.status : 500;
-            res.status(status).json({ message: "Book not found or API error" });
+    try {
+
+        const { isbn } = req.params;
+
+        const response = await axios.get(`http://localhost:5000/isbn/${isbn}`);
+
+        return res.status(200).json(response.data);
+
+    } catch (error) {
+
+        const status = error.response ? error.response.status : 500;
+
+        return res.status(status).json({
+            message: "Book not found or API error"
         });
+
+    }
+
 });
   
 // Get book details based on author
-public_users.get('/author/:author', function (req, res) {
-    const author = req.params.author;
+public_users.get('/author/:author', async function (req, res) {
 
-    axios.get(`http://localhost:5000/author/${author}`)
-        .then((response) => {
-            res.status(200).send(JSON.stringify(response.data, null, 4));
-        })
-        .catch((error) => {
-            const status = error.response ? error.response.status : 500;
-            res.status(status).json({ message: "No books found or internal error" });
+    try {
+
+        const { author } = req.params;
+
+        const response = await axios.get(`http://localhost:5000/author/${author}`);
+
+        return res.status(200).json(response.data);
+
+    } catch (error) {
+
+        const status = error.response ? error.response.status : 500;
+
+        return res.status(status).json({
+            message: "No books found or internal error"
         });
+
+    }
+
 });
 
 // Get all books based on title
-public_users.get('/title/:title', function (req, res) {
-  const title = req.params.title;
+public_users.get('/title/:title', async function (req, res) {
 
-  // Axios returns a Promise
-  axios.get(`http://localhost:5000/title/${title}`)
-    .then((response) => {
-      return res.status(200).send(JSON.stringify(response.data, null, 4));
-    })
-    .catch((err) => {
-      if (err.response && err.response.status === 404) {
-        return res.status(404).json({ message: "No books found with this title" });
-      }
-      return res.status(500).json({ message: "Error fetching book details", error: err.message });
-    });
+    try {
+      const title = req.params.title;
+  
+      const response = await axios.get(`http://localhost:5000/title/${title}`);
+  
+      return res.status(200).json(response.data);
+  
+    } catch (error) {
+  
+      const status = error.response ? error.response.status : 500;
+  
+      return res.status(status).json({
+        message: "No books found or internal server error"
+      });
+  
+    }
+  
 });
 
 //  Get book review
@@ -94,3 +117,4 @@ public_users.get('/review/:isbn', function (req, res) {
   });
 
 module.exports.general = public_users;
+
