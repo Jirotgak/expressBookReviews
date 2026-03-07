@@ -85,7 +85,7 @@ public_users.get('/author/:author', async function (req, res) {
 public_users.get('/title/:title', async function (req, res) {
 
     try {
-      const title = req.params.title;
+      const { title } = req.params;
   
       const response = await axios.get(`http://localhost:5000/title/${title}`);
   
