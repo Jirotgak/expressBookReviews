@@ -25,8 +25,6 @@ public_users.post("/register", (req, res) => {
   });
 
 // Get the book list available in the shop
-const axios = require('axios');
-
 public_users.get('/', async function (req, res) {
     try {
         const response = await axios.get("http://localhost:5000/");
@@ -38,8 +36,6 @@ public_users.get('/', async function (req, res) {
 });
 
 // Get book details based on ISBN
-const axios = require('axios');
-
 public_users.get('/isbn/:isbn', function (req, res) {
     const isbn = req.params.isbn;
 
@@ -54,8 +50,6 @@ public_users.get('/isbn/:isbn', function (req, res) {
 });
   
 // Get book details based on author
-const axios = require('axios');
-
 public_users.get('/author/:author', function (req, res) {
     const author = req.params.author;
 
@@ -70,8 +64,6 @@ public_users.get('/author/:author', function (req, res) {
 });
 
 // Get all books based on title
-const axios = require('axios');
-
 public_users.get('/title/:title', function (req, res) {
   const title = req.params.title;
 
